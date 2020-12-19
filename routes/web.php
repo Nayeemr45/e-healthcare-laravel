@@ -2,6 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\registerController;
+use App\Http\Controllers\LogoutController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,7 +19,30 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('login');
+    $id = null;
+    return view('home.index', compact('id'));
 });
 
+/*
+|--------------------------------------------------------------------------
+| login Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('/login',  [LoginController::class,'index'])->name('login.index');
+Route::post('/login', [LoginController::class,'verify']);
+/*
+|--------------------------------------------------------------------------
+| login Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('/register',  [registerController::class,'index']);
+Route::post('/register', [registerController::class,'create']);
+/*
+|--------------------------------------------------------------------------
+| logout Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('/logout', [LogoutController::class,'index']);
 
+
+Route::get('/home', [homeController::class,'index'])->name('home.index');
