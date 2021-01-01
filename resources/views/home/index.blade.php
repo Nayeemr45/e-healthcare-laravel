@@ -70,10 +70,15 @@
                         <a href="/login" class="btn-style-one">Login/Register</a>
                         @else
                         <div class="user" style="    border: 2px solid #5ec5c5;
-    padding: 7px 7px;
-    border-radius: 10px;">
-                        <a href="/user/profile/{{$id}}" style="margin-right: 10px;"> <i class="fa fa-user" style="margin-right: 5px; color: black; font-size: 24px;"></i><strong><span style="text-transform: uppercase;;">{{$name}}</span></strong></a>
-                        <a href="/logout"><i class="fa fa-sign-out" style="margin-right: 5px; font-size:24px; color: black;"></i>Logout</a>
+                            padding: 7px 7px;
+                            border-radius: 10px;">
+                        <a href="/profile/{{$id}}" style="margin-right: 10px;"> 
+                            <i class="fa fa-user" style="margin-right: 5px; color: black; font-size: 24px;"></i>
+                            <strong><span style="text-transform: uppercase;;">{{$name}}</span></strong>
+                        </a>
+                        <a href="/logout">
+                            <i class="fa fa-sign-out" style="margin-right: 5px; font-size:24px; color: black;">
+                            </i>Logout</a>
 
                         </div>
                         @endif

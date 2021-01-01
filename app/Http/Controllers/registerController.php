@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Patient;
+use Illuminate\Support\Facades\Hash;
+
+
+use Validator;
+
 class registerController extends Controller
 {
     public function index(){
@@ -12,6 +17,26 @@ class registerController extends Controller
     }
 
     public function create(Request $req){
+        $validation = Validator::make($req->all(), [
+            'name' => 'required|min:3',
+            'username' => 'required|min:3',
+            'email'=> 'required',
+            'password'=> 'required|min:8',
+            'contactno' => 'required',
+            'dob' => 'required',
+            'address' => 'required',
+            'bloodgroup' => 'required',
+            'bmi' => 'required|numeric',
+            'weight' => 'required|numeric',
+            'bloodpressure' => 'required',
+            'cal' => 'required|numeric'
+        ]);
+        if($validation->fails()){
+            return redirect()
+                    ->route('register.create')
+                    ->with('errors', $validation->errors())
+                    ->withInput();
+        }
         if($req->hasFile('myimg')){
 
         	$file = $req->file('myimg');
@@ -24,7 +49,7 @@ class registerController extends Controller
                 $user = new User();
                 $user->name         = $req->name;
                 $user->username     = $req->username;
-                $user->password     = $req->password;
+                $user->password     = Hash::make($req->password);
                 $user->email        = $req->email;
                 $user->contactno    = $req->contactno;
                 $user->type         = $req->type;

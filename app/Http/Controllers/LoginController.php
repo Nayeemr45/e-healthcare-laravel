@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Validator;
 
 class LoginController extends Controller
 {
@@ -14,6 +16,7 @@ class LoginController extends Controller
     }
 
     public function verify(Request $req){
+        
     	//echo $req->username;
     	//echo $req->password;
     	//$req->session()->put('name', $req->username);
@@ -32,9 +35,9 @@ class LoginController extends Controller
                     ->where('username', $req->username)
                     ->where('password', $req->password)
                     ->first(); */
-
+                   
         $user = User::where('username', $req->username)
-                    ->where('password', $req->password)
+                   // ->where('password', $password)
                     ->first();
 
                         if($user == null){
@@ -42,12 +45,21 @@ class LoginController extends Controller
                             return redirect('/login');
 
                         }else{
+
+                            $hashedPassword = $user->password;
+                            if(Hash::check($req->password, $hashedPassword)){
+                                
+                                $req->session()->put('username', $req->username);
+                                //$req->session()->put('type', $req->username);
+                                $req->session()->put('id', $user->id);
+                                
+                                return redirect()->route('home.index');
+                            }else{
+                                $req->session()->flash('msg', 'invalid username/password');
+                                return redirect('/login');
+                            }
                             
-                            $req->session()->put('username', $req->username);
-                            //$req->session()->put('type', $req->username);
-                            $req->session()->put('id', $user->id);
                             
-                            return redirect()->route('home.index');
 
                          }
 

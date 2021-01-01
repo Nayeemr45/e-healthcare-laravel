@@ -88,16 +88,18 @@
             
             <div class="card-body px-lg-5 py-lg-5">
               
-              <% if(typeof alert != 'undefined'){ %>
-                <% alert.forEach(function(error){ %>
+            @if($errors)
+            @foreach($errors->all() as $err)
+
                   <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    <%= error.msg %>
+                  {{$err}}
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
                     </div>
-                  <% })%> 
-                  <% }%> 
+                    @endforeach
+                    @endif
+
                  
               <form  method="POST" enctype="multipart/form-data">
                 @csrf

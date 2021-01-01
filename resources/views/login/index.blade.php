@@ -94,7 +94,7 @@
               <div class="text-muted text-center mt-2 mb-3"><small>Sign in with</small></div>
               <div class="btn-wrapper text-center">
                 <a href="/login/auth/facebook" class="btn btn-neutral btn-icon">
-                  <span class="btn-inner--icon"><img src="/abc/img/icons/common/facebook.png"></span>
+                  <span class="btn-inner--icon"><img src="{{ asset('asset/img/facebook.png')}}"></span>
                   <span class="btn-inner--text">Facebook</span>
                 </a>
                 <div class="text-muted text-center mt-2 mb-3"><small>Only For Patient</small></div>

@@ -2,10 +2,22 @@
 
 use Illuminate\Support\Facades\Route;
 
+use Illuminate\Support\Facades\Http;
+
+
+use Illuminate\Http\Client\Response;
+
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\registerController;
+use App\Http\Controllers\profileController;
 use App\Http\Controllers\LogoutController;
+
+
+
+
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -19,8 +31,27 @@ use App\Http\Controllers\LogoutController;
 */
 
 Route::get('/', function () {
-    $id = null;
-    return view('home.index', compact('id'));
+
+    $resp = Http::get('http://127.0.0.1:3000/data/13');
+    //dd($resp->body());
+    echo $resp->body(['id']);
+    echo "<br>";
+    echo "<br>";
+    echo "<br>";
+    //echo $resp->header();
+    print_r(json_decode($resp->body()));
+
+    $v = json_decode($resp->body());
+    echo "<br>";
+    echo "<br>";
+    echo "<br>";
+    //foreach()
+    print_r($v->id);
+    //echo $v;
+    
+    //return view('nn')
+    //$id = null;
+    //return view('home.index', compact('id'));
 });
 
 /*
@@ -36,7 +67,7 @@ Route::post('/login', [LoginController::class,'verify']);
 |--------------------------------------------------------------------------
 */
 Route::get('/register',  [registerController::class,'index']);
-Route::post('/register', [registerController::class,'create']);
+Route::post('/register', [registerController::class,'create'])->name('register.create');
 /*
 |--------------------------------------------------------------------------
 | logout Routes
@@ -46,3 +77,10 @@ Route::get('/logout', [LogoutController::class,'index']);
 
 
 Route::get('/home', [homeController::class,'index'])->name('home.index');
+/*
+|--------------------------------------------------------------------------
+| Profile Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('/profile/{id}',  [profileController::class,'index'])->name('profile.index');
+Route::post('/profile/{id}', [profilerController::class,'create']);
